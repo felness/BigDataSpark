@@ -1,0 +1,22 @@
+services:
+  neo4j:
+    image: neo4j:5.23-enterprise
+    container_name: neo4j-db
+    environment:
+      - NEO4J_AUTH=neo4j/password-secret
+      - NEO4J_ACCEPT_LICENSE_AGREEMENT=yes
+    ports:
+      - '7474:7474'
+      - '7687:7687'
+    volumes:
+      - neo4j_data:/data
+      - ./init-db/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+    healthcheck:
+      test: [ "CMD", "cypher-shell", "-u", "neo4j", "-p", "password-secret", "RETURN 1" ]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+    networks:
+      - shared

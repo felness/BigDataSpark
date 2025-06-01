@@ -1,0 +1,35 @@
+datasource:
+  postgres:
+    url: "jdbc:postgresql://postgres:5432/sales_db"
+    user: "admin"
+    password: "secret"
+    table: "mock_data"
+  clickhouse:
+    url: "jdbc:clickhouse://clickhouse:8123/sales_db"
+    user: "admin"
+    password: "secret"
+  mongodb:
+    uri: "mongodb:27017"
+    database: "sales_db"
+    collection: "sales_collection"
+  cassandra:
+    contact-points: "cassandra"
+    port: 9042
+    keyspace: "sales"
+    table: "sales_table"
+    username: "cassandra"
+    password: "cassandra"
+  neo4j:
+    uri: "bolt://neo4j:7687"
+    user: "neo4j"
+    password: "password-secret"
+    query: "CREATE (n:Sale {id: value.id, amount: value.amount})"
+  valkey:
+    host: "valkey-db"
+    port: 6379
+    table: "sales_table"
+spark:
+  master: "spark://spark-master:7077"
+  app-name: "SnowflakeETLPipeline"
+  ui:
+    enabled: false

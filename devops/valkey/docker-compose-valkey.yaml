@@ -1,0 +1,23 @@
+services:
+  valkey:
+    image: valkey/valkey:8.0
+    container_name: valkey-db
+    ports:
+      - '6379:6379'
+    volumes:
+      - valkey_data:/data
+      - ./init-db/init-valkey.sh:/valkey/init-valkey.sh
+    command: >
+      bash -c "
+        valkey-server --dir /data --bind 0.0.0.0 --daemonize yes &&
+        sleep 10 &&
+        /valkey/init-valkey.sh &&
+        tail -f /dev/null
+      "
+    healthcheck:
+      test: [ "CMD", "valkey-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - shared

@@ -1,0 +1,23 @@
+FROM bitnami/spark:3.5.3
+USER root
+RUN apt-get update && apt-get install -y python3 python3-pip curl
+COPY requirements.txt /opt/bitnami/spark/requirements.txt
+RUN pip3 install -r /opt/bitnami/spark/requirements.txt
+
+# Копирование JAR-файлов через curl
+RUN mkdir -p /opt/bitnami/spark/jars
+RUN curl -L -o /opt/bitnami/spark/jars/cassandra-driver-core-4.17.0.jar https://repo1.maven.org/maven2/com/datastax/oss/java-driver-core/4.17.0/java-driver-core-4.17.0.jar
+RUN curl -L -o /opt/bitnami/spark/jars/postgresql-42.7.3.jar https://jdbc.postgresql.org/download/postgresql-42.7.3.jar
+RUN curl -L -o /opt/bitnami/spark/jars/mongo-spark-connector_2.12-10.3.0.jar https://repo1.maven.org/maven2/org/mongodb/spark/mongo-spark-connector_2.12/10.3.0/mongo-spark-connector_2.12-10.3.0.jar
+RUN curl -L -o /opt/bitnami/spark/jars/mongodb-driver-sync-4.11.2.jar https://repo1.maven.org/maven2/org/mongodb/mongodb-driver-sync/4.11.2/mongodb-driver-sync-4.11.2.jar
+RUN curl -L -o /opt/bitnami/spark/jars/bson-4.11.2.jar https://repo1.maven.org/maven2/org/mongodb/bson/4.11.2/bson-4.11.2.jar
+RUN curl -L -o /opt/bitnami/spark/jars/mongodb-driver-core-4.11.2.jar https://repo1.maven.org/maven2/org/mongodb/mongodb-driver-core/4.11.2/mongodb-driver-core-4.11.2.jar
+RUN curl -L -o /opt/bitnami/spark/jars/spark-cassandra-connector_2.12-3.5.1.jar https://repo1.maven.org/maven2/com/datastax/spark/spark-cassandra-connector_2.12/3.5.1/spark-cassandra-connector_2.12-3.5.1.jar
+RUN curl -L -o /opt/bitnami/spark/jars/clickhouse-jdbc-0.7.1.jar https://repo1.maven.org/maven2/com/clickhouse/clickhouse-jdbc/0.7.1/clickhouse-jdbc-0.7.1.jar
+RUN curl -L -o /opt/bitnami/spark/jars/neo4j-connector-apache-spark_2.12-5.3.0_for_spark_3.jar https://repo1.maven.org/maven2/org/neo4j/neo4j-connector-apache-spark_2.12/5.3.0_for_spark_3/neo4j-connector-apache-spark_2.12-5.3.0_for_spark_3.jar
+RUN curl -L -o /opt/bitnami/spark/jars/neo4j-java-driver-5.14.0.jar https://repo1.maven.org/maven2/org/neo4j/driver/neo4j-java-driver/5.14.0/neo4j-java-driver-5.14.0.jar
+RUN curl -L -o /opt/bitnami/spark/jars/spark-redis_2.12-3.1.0.jar https://repo1.maven.org/maven2/io/github/spark-redis/spark-redis_2.12/3.1.0/spark-redis_2.12-3.1.0.jar
+RUN curl -L -o /opt/bitnami/spark/jars/jedis-4.3.2.jar https://repo1.maven.org/maven2/redis/clients/jedis/4.3.2/jedis-4.3.2.jar
+RUN curl -L -o /opt/bitnami/spark/jars/httpclient5-5.2.1.jar https://repo1.maven.org/maven2/org/apache/httpcomponents/client5/httpclient5/5.2.1/httpclient5-5.2.1.jar
+
+USER 1001
